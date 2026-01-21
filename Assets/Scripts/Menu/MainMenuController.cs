@@ -7,31 +7,64 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField]
-    private Button _buttonContinue;
+    private TMP_Text _txtTitle;
 
     [SerializeField]
-    private Button _buttonNewGame;
+    private Button _buttonContinue;
 
     [SerializeField]
     private Button _buttonShop;
 
     [SerializeField]
+    private GameObject _mainLayout;
+
+    [Header("New Game")]
+
+    [SerializeField]
+    private Button _buttonNewGame;
+
+    [SerializeField]
+    private GameObject _lobbyLayout;
+
+    [SerializeField]
+    private Button _lobbyLayoutButtonOnlineCoop;
+
+    [SerializeField]
+    private Button _lobbyLayoutButtonBack;
+
+    [SerializeField]
+    private GameObject _lobbyOnline;
+
+    [SerializeField]
+    private Button _lobbyOnlineButtonBack;
+
+    [Header("Options")]
+
+    [SerializeField]
     private Button _buttonOptions;
+
+    [SerializeField]
+    private GameObject _popupOptions;
+
+    [SerializeField]
+    private Button _popupOptionsButtonBack;
+
+    [SerializeField]
+    private Button _popupOptionsButtonSave;
+
+    [Header("Exit")]
 
     [SerializeField]
     private Button _buttonExit;
 
     [SerializeField]
-    private Button _buttonOnlineCoop;
+    private GameObject _popupExit;
 
     [SerializeField]
-    private Button[] _lsButtonBack;
+    private Button _popupExitButtonNo;
 
     [SerializeField]
-    private GameObject _mainLayout;
-
-    [SerializeField]
-    private GameObject _lobbyLayout;
+    private Button _popupExitButtonYes;
 
     private const float ButtonHoverTargetX = 25;
     private const float ButtonHoverTransitionDuration = 0.25f;
@@ -52,15 +85,21 @@ public class MainMenuController : MonoBehaviour
         AddHoverEffect(_buttonShop);
         AddHoverEffect(_buttonOptions);
         AddHoverEffect(_buttonExit);
-        AddHoverEffect(_buttonOnlineCoop);
+        AddHoverEffect(_lobbyLayoutButtonOnlineCoop);
+        AddHoverEffect(_lobbyLayoutButtonBack);
 
         _buttonNewGame.onClick.AddListener(OnNewGameButtonClick);
+        _lobbyLayoutButtonOnlineCoop.onClick.AddListener(OnLobbyLayoutButtonOnlineCoopClick);
+        _lobbyLayoutButtonBack.onClick.AddListener(OnLobbyLayoutButtonBackClick);
+        _lobbyOnlineButtonBack.onClick.AddListener(OnLobbyOnlineButtonBackClick);
 
-        foreach (Button btnBack in _lsButtonBack)
-        {
-            AddHoverEffect(btnBack);
-            btnBack.onClick.AddListener(OnBackButtonClick);
-        }
+        _buttonOptions.onClick.AddListener(OnOptionsButtonClick);
+        _popupOptionsButtonBack.onClick.AddListener(OnPopupOptionsButtonBackClick);
+        _popupOptionsButtonSave.onClick.AddListener(OnPopupOptionsButtonSaveClick);
+
+        _buttonExit.onClick.AddListener(OnExitButtonClick);
+        _popupExitButtonNo.onClick.AddListener(OnPopupExitButtonNoClick);
+        _popupExitButtonYes.onClick.AddListener(OnPopupExitButtonYesClick);
     }
 
     private void OnNewGameButtonClick()
@@ -75,7 +114,20 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    private void OnBackButtonClick()
+    private void OnLobbyLayoutButtonOnlineCoopClick()
+    {
+        _txtTitle.gameObject.SetActive(false);
+        _lobbyLayout.SetActive(false);
+        _lobbyOnline.SetActive(true);
+
+        foreach (TMP_Text text in _lobbyLayout.GetComponentsInChildren<TMP_Text>())
+        {
+            DOTween.Kill(text);
+            text.rectTransform.anchoredPosition = Vector2.zero;
+        }
+    }
+
+    private void OnLobbyLayoutButtonBackClick()
     {
         _mainLayout.SetActive(true);
         _lobbyLayout.SetActive(false);
@@ -85,6 +137,47 @@ public class MainMenuController : MonoBehaviour
             DOTween.Kill(text);
             text.rectTransform.anchoredPosition = Vector2.zero;
         }
+    }
+
+    private void OnLobbyOnlineButtonBackClick()
+    {
+        _txtTitle.gameObject.SetActive(true);
+        _lobbyLayout.SetActive(true);
+        _lobbyOnline.SetActive(false);
+    }
+
+    private void OnOptionsButtonClick()
+    {
+        _popupOptions.SetActive(true);
+    }
+
+    private void OnPopupOptionsButtonBackClick()
+    {
+        _popupOptions.SetActive(false);
+    }
+
+    private void OnPopupOptionsButtonSaveClick()
+    {
+        _popupOptions.SetActive(false);
+    }
+
+    private void OnExitButtonClick()
+    {
+        _popupExit.SetActive(true);
+    }
+
+    private void OnPopupExitButtonNoClick()
+    {
+        _popupExit.SetActive(false);
+    }
+
+    private void OnPopupExitButtonYesClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private void AddHoverEffect(Button button)
