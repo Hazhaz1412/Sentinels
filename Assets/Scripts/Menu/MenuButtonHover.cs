@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class MainMenuButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MenuButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private const float ButtonHoverTargetX = 25;
     private const float ButtonHoverTransitionDuration = 0.25f;

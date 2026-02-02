@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class MainMenuPopupOptionsController : MonoBehaviour
+public class MenuPopupOptionsController : MonoBehaviour
 {
+    [SerializeField]
+    private MenuSceneUtils _utils;
+
     [SerializeField]
     private Button _btnSave;
 
     [SerializeField]
     private Button _btnBack;
-
-    [SerializeField]
-    private GameObject _popupOptions;
 
     [SerializeField]
     private Slider _masterVolumeSlider;
@@ -29,12 +30,12 @@ public class MainMenuPopupOptionsController : MonoBehaviour
 
     private void OnBtnSaveClick()
     {
-        _popupOptions.SetActive(false);
+        _utils.HidePopup();
     }
 
     private void OnBtnBackClick()
     {
-        _popupOptions.SetActive(false);
+        _utils.HidePopup();
     }
 
 }

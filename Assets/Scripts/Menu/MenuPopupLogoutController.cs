@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuPopupExitController : MonoBehaviour
+public class MenuPopupLogoutController : MonoBehaviour
 {
+    [SerializeField]
+    private MenuSceneUtils _utils;
+
     [SerializeField]
     private Button _btnYes;
 
     [SerializeField]
     private Button _btnNo;
-
-    [SerializeField]
-    private GameObject _popupExit;
 
     private void Start()
     {
@@ -20,15 +20,12 @@ public class MainMenuPopupExitController : MonoBehaviour
 
     private void OnBtnYesClick()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        PlayerPrefs.DeleteKey(nameof(PlayerPrefsKeys.S_UserId));
+        _utils.HidePopup();
     }
 
     private void OnBtnNoClick()
     {
-        _popupExit.SetActive(false);
+        _utils.HidePopup();
     }
 }
