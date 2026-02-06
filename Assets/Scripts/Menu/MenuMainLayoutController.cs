@@ -1,14 +1,19 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuMainLayoutController : MonoBehaviour
+public class MenuMainLayoutController : MonoBehaviour
 {
+    [SerializeField]
+    private MenuSceneUtils _utils;
+
     [SerializeField]
     private Button _btnContinue;
 
     [SerializeField]
     private Button _btnNewGame;
+
+    [SerializeField]
+    private Button _btnJoinRoom;
 
     [SerializeField]
     private Button _btnShop;
@@ -23,46 +28,45 @@ public class MainMenuMainLayoutController : MonoBehaviour
     private Button _btnAuth;
 
     [SerializeField]
-    private GameObject _mainLayout;
-
-    [SerializeField]
-    private GameObject _roomLayout;
-
-    [SerializeField]
-    private GameObject _popupOptions;
-
-    [SerializeField]
-    private GameObject _popupExit;
-
-    [SerializeField]
-    private GameObject _popupAuth;
+    private Button _btnLogout;
 
     private void Start()
     {
         _btnNewGame.onClick.AddListener(OnBtnNewGameClick);
+        _btnShop.onClick.AddListener(OnBtnShopClick);
         _btnOptions.onClick.AddListener(OnBtnOptionsClick);
         _btnExit.onClick.AddListener(OnBtnExitClick);
         _btnAuth.onClick.AddListener(OnBtnAuthClick);
+        _btnLogout.onClick.AddListener(OnBtnLogoutClick);
     }
 
     private void OnBtnNewGameClick()
     {
-        _mainLayout.SetActive(false);
-        _roomLayout.SetActive(true);
+        _utils.ShowCoopLayout();
+    }
+
+    private void OnBtnShopClick()
+    {
+        _utils.ShowPopupShop();
     }
 
     private void OnBtnOptionsClick()
     {
-        _popupOptions.SetActive(true);
+        _utils.ShowPopupOptions();
     }
 
     private void OnBtnExitClick()
     {
-        _popupExit.SetActive(true);
+        _utils.ShowPopupExit();
     }
 
     private void OnBtnAuthClick()
     {
-        _popupAuth.SetActive(true);
+        _utils.ShowPopupAuth();
+    }
+
+    private void OnBtnLogoutClick()
+    {
+        _utils.ShowPopupLogout();
     }
 }
